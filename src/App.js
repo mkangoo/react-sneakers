@@ -24,18 +24,42 @@ function App() {
     })
   }, [])
 
-  const onAddToCart = obj => {
-    axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
-    setCartItems(prev => [...prev, obj])
+  const onAddToCart = async obj => {
+    if (cartItems.find(item => item.id === obj.id)) {
+      try {
+        axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
+        setCartItems(prev => prev.filter(item => item.id !== obj.id))
+      } catch (err) {
+        console.error('Ошибка удаления товара:', err)
+        alert('Ошибка удаления товара')
+      }
+    } else {
+      try {
+        const { data } = await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
+        setCartItems(prev => [...prev, data])
+      } catch (err) {
+        console.error('Ошибка обновления корзины:', err)
+        alert('Ошибка обновления корзины')
+      }
+    }
   }
 
   const onRemoveItem = id => {
     axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
     setCartItems(prev => prev.filter(item => item.id !== id))
   }
-  const onAddToFavorite = obj => {
-    // axios.get('https://6637d3bb288fedf693817325.mockapi.io/favorites').then(res => {
-    setFavorites(prev => [...prev, obj])
+  const onAddToFavorite = async obj => {
+    try {
+      if (favorites.find(favoriteObj => favoriteObj.id === obj.id)) {
+        // axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/favorites/${obj.id}`)
+        setFavorites(prev => prev.filter(item => item.id !== obj.id))
+      } else {
+        // const { data } = await axios.get('https://6637d3bb288fedf693817325.mockapi.io/favorites')
+        setFavorites(prev => [...prev, obj])
+      }
+    } catch (err) {
+      alert('Не удалось добавить в избранное')
+    }
   }
 
   const onChangeSearchInput = event => {
@@ -59,7 +83,7 @@ function App() {
             />
           }
         />
-        <Route path="/favorites" element={<Favorites favorites={favorites} />} />
+        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} />} />
       </Routes>
     </div>
   )
