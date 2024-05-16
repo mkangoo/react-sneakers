@@ -13,6 +13,9 @@
 		box-shadow: 0px 20px 35px #0000000d;
 		transform: translateY(-5px);
 	}
+	&:active{
+		transform: scale(1.1);
+	}
 
 	.favorite {
 		position: absolute;
