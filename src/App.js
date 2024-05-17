@@ -18,12 +18,18 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const cartBasketResponse = await axios.get('https://6637d3bb288fedf693817325.mockapi.io/cart')
-      const itemsResponse = await axios.get('https://6637d3bb288fedf693817325.mockapi.io/items')
-
-      setIsLoading(false)
-      setCartItems(cartBasketResponse.data)
-      setItems(itemsResponse.data)
+      try {
+        const [cartResponse, itemsResponse] = await Promise.all([
+          axios.get('https://6637d3bb288fedf693817325.mockapi.io/cart'),
+          axios.get('https://6637d3bb288fedf693817325.mockapi.io/items'),
+        ])
+        setIsLoading(false)
+        setCartItems(cartResponse.data)
+        setItems(itemsResponse.data)
+      } catch (err) {
+        alert('Error when requesting data')
+        console.error(err)
+      }
     }
     fetchData()
   }, [])
@@ -41,8 +47,13 @@ function App() {
   }
 
   const onRemoveItem = id => {
-    axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
-    setCartItems(prev => prev.filter(item => item.id !== id))
+    try {
+      axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
+      setCartItems(prev => prev.filter(item => item.id !== id))
+    } catch (err) {
+      alert('Error when deleting from basket')
+      console.error(err)
+    }
   }
   const onAddToFavorite = async obj => {
     try {
@@ -78,11 +89,11 @@ function App() {
               onChangeSearchInput={onChangeSearchInput}
               onAddToFavorite={onAddToFavorite}
               onAddToCart={onAddToCart}
-              isLoading = {isLoading}
+              isLoading={isLoading}
             />
           }
         />
-        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} />} />
+        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} />} />
       </Routes>
     </div>
   )
