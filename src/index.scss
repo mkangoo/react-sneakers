@@ -69,55 +69,55 @@ body {
   }
 }
 
-.overlay {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.1);
+// .overlay {
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: 1;
+//   background-color: rgba(0, 0, 0, 0.1);
 
-  .drawer {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    width: 420px;
-    height: 100%;
-    padding: 30px;
-    background: #ffffff;
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+// .drawer {
+//   display: flex;
+//   flex-direction: column;
+//   position: absolute;
+//   right: 0;
+//   width: 420px;
+//   height: 100%;
+//   padding: 30px;
+//   background: #ffffff;
+//   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
 
-    .cart-close {
-      display: contents;
-      h2 {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-      }
+//   .cart-close {
+//     display: contents;
+//     h2 {
+//       display: flex;
+//       justify-content: space-between;
+//       margin-bottom: 30px;
+//     }
 
-      img {
-        cursor: pointer;
-      }
-      .wrapperCart {
-        display: contents;
-      }
-    }
+//     img {
+//       cursor: pointer;
+//     }
+//     .wrapperCart {
+//       display: contents;
+//     }
+//   }
 
-    .items {
-      flex: 1;
-      overflow: auto;
-      margin-bottom: 20px;
-    }
+//   .items {
+//     flex: 1;
+//     overflow: auto;
+//     margin-bottom: 20px;
+//   }
 
-    h2 {
-      margin: 0;
-      font-weight: 700;
-      line-height: 29px;
-    }
-  }
-}
+//   h2 {
+//     margin: 0;
+//     font-weight: 700;
+//     line-height: 29px;
+//   }
+// }
+// }
 
 .cart-item {
   display: flex;
@@ -158,50 +158,50 @@ body {
   }
 }
 
-.cart-totalBlock {
-  ul {
-    display: block;
-    margin-bottom: 40px !important;
-  }
-  li {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 24px;
+// .cart-totalBlock {
+//   ul {
+//     display: block;
+//     margin-bottom: 40px !important;
+//   }
+//   li {
+//     display: flex;
+//     align-items: flex-end;
+//     margin-bottom: 24px;
 
-    div {
-      position: relative;
-      top: -4px;
+//     div {
+//       position: relative;
+//       top: -4px;
 
-      flex: 1;
-      border-bottom: 1px dashed #dfdfdf;
-      margin: 0 10px;
-    }
-  }
-  .green-button {
-    position: relative;
+//       flex: 1;
+//       border-bottom: 1px dashed #dfdfdf;
+//       margin: 0 10px;
+//     }
+//   }
+//   .green-button {
+//     position: relative;
 
-    &:disabled {
-      animation: button-loading 0.6s ease-in-out infinite;
-    }
+//     &:disabled {
+//       animation: button-loading 0.6s ease-in-out infinite;
+//     }
 
-    &:hover {
-      img {
-        transform: translateX(5px);
-      }
-      &:active {
-        img {
-          transform: translateX(-1px);
-        }
-      }
-    }
-    img {
-      position: absolute;
-      right: 30px;
-      top: 20px;
-      transition: transform 0.15s ease-in-out;
-    }
-  }
-}
+//     &:hover {
+//       img {
+//         transform: translateX(5px);
+//       }
+//       &:active {
+//         img {
+//           transform: translateX(-1px);
+//         }
+//       }
+//     }
+//     img {
+//       position: absolute;
+//       right: 30px;
+//       top: 20px;
+//       transition: transform 0.15s ease-in-out;
+//     }
+//   }
+// }
 
 .green-button {
   cursor: pointer;
