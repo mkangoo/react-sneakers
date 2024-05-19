@@ -1,15 +1,18 @@
 // import styles from "./Drawer.module.scss";
-import { useContext, useState } from 'react'
-import AppContext from '../../context'
-import Info from '../Info'
 import axios from 'axios'
+import { useState } from 'react'
+
+import { useCart } from '../../hooks/useCart'
+import Info from '../Info'
+
+import styles from './Drawer.module.scss'
 
 const delay = ms => {
   new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function Drawer({ onClose, onRemove, items = [] }) {
-  const { cartItems, setCartItems } = useContext(AppContext)
+function Drawer({ onClose, onRemove, items = [], opened }) {
+  const { cartItems, setCartItems, totalPrice } = useCart()
   const [isOrderComplete, setIsOrderComplete] = useState(false)
   const [orderId, setOrderId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -34,15 +37,15 @@ function Drawer({ onClose, onRemove, items = [] }) {
   }
 
   return (
-    <div className="overlay">
-      <div className="drawer">
-        <div className="cart-close">
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+      <div className={styles.drawer}>
+        <div className={styles.cartClose}>
           <h2>
             Корзина
             <img onClick={onClose} width={32} height={32} src="/img/icons/btn-remove.svg" alt="Close" />
           </h2>
           {items.length > 0 ? (
-            <div className="wrapperCart">
+            <div className={styles.wrapperCart}>
               <div className="items">
                 {items.map(item => (
                   <div key={item.id} className="cart-item">
@@ -62,17 +65,17 @@ function Drawer({ onClose, onRemove, items = [] }) {
                   </div>
                 ))}
               </div>
-              <div className="cart-totalBlock">
+              <div className={styles.cartTotalBlock}>
                 <ul>
                   <li>
                     <span>Итого:</span>
                     <div></div>
-                    <b>21 498 р.</b>
+                    <b>{totalPrice} руб.</b>
                   </li>
                   <li>
                     <span>Налог 5%:</span>
                     <div></div>
-                    <b>1072 р.</b>
+                    <b>{Math.ceil(totalPrice * 0.05)} руб.</b>
                   </li>
                 </ul>
 
