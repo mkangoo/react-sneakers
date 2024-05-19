@@ -1,10 +1,14 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
+
 import Drawer from './components/Drawer'
 import Header from './components/Header'
-import Home from './pages/Home'
 import Favorites from './pages/Favorites'
+import Orders from './pages/Orders'
+import Home from './pages/Home'
+
+import AppContext from './context'
 
 import './index.scss'
 
@@ -34,13 +38,13 @@ function App() {
     fetchData()
   }, [])
 
-  const onAddToCart = obj => {
+  const onAddToCart = async obj => {
     try {
       if (cartItems.find(item => Number(item.id) === Number(obj.id))) {
-        axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
+        await axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
         setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)))
       } else {
-        axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
+        await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
         setCartItems(prev => [...prev, obj])
       }
     } catch (error) {}
@@ -55,47 +59,59 @@ function App() {
       console.error(err)
     }
   }
-  const onAddToFavorite = async obj => {
+  const onAddToFavorite = obj => {
     try {
       if (favorites.find(favoriteObj => favoriteObj.id === obj.id)) {
-        // axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/favorites/${obj.id}`)
         setFavorites(prev => prev.filter(item => item.id !== obj.id))
       } else {
-        // const { data } = await axios.get('https://6637d3bb288fedf693817325.mockapi.io/favorites')
         setFavorites(prev => [...prev, obj])
       }
     } catch (err) {
-      alert('Не удалось добавить в избранное')
+      alert('Failed to add to favorites')
     }
   }
 
   const onChangeSearchInput = event => {
     setSearchValue(event.target.value)
   }
+  //TODO: refactor function
+  const isItemAdded = id => {
+    return cartItems.some(obj => Number(obj.id) === Number(id))
+  }
+
+  const isFavoriteAdded = id => {
+    return favorites.some(obj => Number(obj.id) === Number(id))
+  }
+
   return (
-    <div className="wrapper clear">
-      <Header onClickCart={() => setCartOpened(true)} />
-      {cartOpened && <Drawer onClose={() => setCartOpened(false)} onRemove={onRemoveItem} items={cartItems} />}
-      <Routes>
-        <Route
-          path="/"
-          exact
-          element={
-            <Home
-              items={items}
-              cartItems={cartItems}
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              onChangeSearchInput={onChangeSearchInput}
-              onAddToFavorite={onAddToFavorite}
-              onAddToCart={onAddToCart}
-              isLoading={isLoading}
-            />
-          }
-        />
-        <Route path="/favorites" element={<Favorites items={favorites} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} />} />
-      </Routes>
-    </div>
+    <AppContext.Provider
+      value={{ items, cartItems, favorites, isItemAdded, onAddToCart, onAddToFavorite, isFavoriteAdded, setCartOpened, setCartItems }}
+    >
+      <div className="wrapper clear">
+        <Header onClickCart={() => setCartOpened(true)} />
+        <Drawer onClose={() => setCartOpened(false)} onRemove={onRemoveItem} items={cartItems} opened={cartOpened} />
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <Home
+                items={items}
+                cartItems={cartItems}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                onChangeSearchInput={onChangeSearchInput}
+                onAddToFavorite={onAddToFavorite}
+                onAddToCart={onAddToCart}
+                isLoading={isLoading}
+              />
+            }
+          />
+          <Route path="/favorites" exact element={<Favorites onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} />} />
+          <Route path="/orders" exact element={<Orders />} />
+        </Routes>
+      </div>
+    </AppContext.Provider>
   )
 }
 
