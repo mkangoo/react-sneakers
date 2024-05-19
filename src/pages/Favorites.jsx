@@ -1,7 +1,11 @@
-import Card from '../components/Card'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import Card from '../components/Card'
+import AppContext from '../context'
+import Info from '../components/Info'
 
-function Favorites({ items, onAddToFavorite }) {
+function Favorites() {
+  const { favorites, onAddToCart, onAddToFavorite } = useContext(AppContext)
   return (
     <div className="content p-40">
       <div className="d-flex align-center mb-40">
@@ -11,23 +15,14 @@ function Favorites({ items, onAddToFavorite }) {
         <h1>Мои закладки</h1>
       </div>
 
-      {items.length > 0 ? (
+      {favorites.length > 0 ? (
         <div className=" d-flex flex-wrap ">
-          {items.map(item => (
-            <Card key={item.id} favorited={true} onFavorite={onAddToFavorite} {...item} />
+          {favorites.map(item => (
+            <Card key={item.id} favorited={true} onFavorite={onAddToFavorite} onPlus={onAddToCart} {...item} />
           ))}
         </div>
       ) : (
-        <div className="favorites">
-          <img src="./img/smileFavorite.png" width={70} height={70} alt="Smile" />
-          <div>
-            <h3>Закладок нет</h3>
-            <p>Вы ничего не добавили в закладки</p>
-          </div>
-          <Link to="/">
-            <button className="green-button">Вернуться назад</button>
-          </Link>
-        </div>
+        <Info title="Закладок нет" description="Вы ничего не добавили в закладки" image="/img/smileFavorite.png" />
       )}
     </div>
   )
