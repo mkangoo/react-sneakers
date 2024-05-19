@@ -5,13 +5,14 @@ import AppContext from '../../context'
 
 function Card({ title, price, imgUrl, id, onFavorite, onPlus, loading = false }) {
   const { isItemAdded, isFavoriteAdded } = useContext(AppContext)
+  const itemObj = { title, price, imgUrl, id, parentId: id }
 
   const onClickPlus = () => {
-    onPlus({ title, price, imgUrl, id })
+    onPlus(itemObj)
   }
 
   const onClickFavorite = () => {
-    onFavorite({ title, price, imgUrl, id })
+    onFavorite(itemObj)
   }
   return (
     <div className={styles.card}>

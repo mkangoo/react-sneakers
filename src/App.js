@@ -27,12 +27,13 @@ function App() {
           axios.get('https://6637d3bb288fedf693817325.mockapi.io/cart'),
           axios.get('https://6637d3bb288fedf693817325.mockapi.io/items'),
         ])
+
         setIsLoading(false)
         setCartItems(cartResponse.data)
         setItems(itemsResponse.data)
-      } catch (err) {
+      } catch (error) {
         alert('Error when requesting data')
-        console.error(err)
+        console.error(error)
       }
     }
     fetchData()
@@ -41,22 +42,25 @@ function App() {
   const onAddToCart = async obj => {
     try {
       if (cartItems.find(item => Number(item.id) === Number(obj.id))) {
-        await axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
         setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)))
+        await axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
       } else {
-        await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
         setCartItems(prev => [...prev, obj])
+        await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
       }
-    } catch (error) {}
+    } catch (error) {
+      alert('Error adding to cart')
+      console.error(error)
+    }
   }
 
   const onRemoveItem = id => {
     try {
-      axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
       setCartItems(prev => prev.filter(item => item.id !== id))
-    } catch (err) {
+      axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
+    } catch (error) {
       alert('Error when deleting from basket')
-      console.error(err)
+      console.error(error)
     }
   }
   const onAddToFavorite = obj => {
@@ -66,8 +70,9 @@ function App() {
       } else {
         setFavorites(prev => [...prev, obj])
       }
-    } catch (err) {
+    } catch (error) {
       alert('Failed to add to favorites')
+      console.error(error)
     }
   }
 
@@ -76,7 +81,7 @@ function App() {
   }
   //TODO: refactor function
   const isItemAdded = id => {
-    return cartItems.some(obj => Number(obj.id) === Number(id))
+    return cartItems.some(obj => Number(obj.parentId) === Number(id))
   }
 
   const isFavoriteAdded = id => {
