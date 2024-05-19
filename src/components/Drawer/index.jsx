@@ -46,7 +46,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
           </h2>
           {items.length > 0 ? (
             <div className={styles.wrapperCart}>
-              <div className="items">
+              <div className="items flex">
                 {items.map(item => (
                   <div key={item.id} className="cart-item">
                     <div style={{ backgroundImage: `url(${item.imgUrl})` }} className="cart-item__img "></div>
