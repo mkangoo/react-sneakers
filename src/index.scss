@@ -180,6 +180,10 @@ body {
   .green-button {
     position: relative;
 
+    &:disabled {
+      animation: button-loading 0.6s ease-in-out infinite;
+    }
+
     &:hover {
       img {
         transform: translateX(5px);
@@ -228,6 +232,10 @@ body {
     box-shadow: none;
     background: darken($color: #9dd558, $amount: 1);
   }
+  &:disabled {
+    background-color: #bebebe !important;
+    cursor: default;
+  }
 }
 
 .favorites {
@@ -239,7 +247,7 @@ body {
   text-align: center;
   img {
     margin-bottom: 29px;
-    margin-top: 200px;
+    margin-top: 100px;
   }
   p {
     font-size: 16px;
@@ -251,5 +259,21 @@ body {
   .green-button {
     cursor: pointer;
     width: 245px;
+    color: #f3f3f3;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+@keyframes button-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
   }
 }
