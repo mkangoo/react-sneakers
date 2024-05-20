@@ -1,4 +1,3 @@
-// import styles from "./Drawer.module.scss";
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -14,7 +13,7 @@ const delay = ms => {
 function Drawer({ onClose, onRemove, items = [], opened }) {
   const { cartItems, setCartItems, totalPrice } = useCart()
   const [isOrderComplete, setIsOrderComplete] = useState(false)
-  const [orderId, setOrderId] = useState(null)
+  // const [orderId, setOrderId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const onClickOrder = async () => {
@@ -46,16 +45,16 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
           </h2>
           {items.length > 0 ? (
             <div className={styles.wrapperCart}>
-              <div className="items flex">
+              <div className={styles.items}>
                 {items.map(item => (
-                  <div key={item.id} className="cart-item">
-                    <div style={{ backgroundImage: `url(${item.imgUrl})` }} className="cart-item__img "></div>
+                  <div key={item.id} className={styles.cartItem}>
+                    <div style={{ backgroundImage: `url(${item.imgUrl})` }} className={styles['cart-item__img']}></div>
                     <div className="mr-20">
                       <p className="mb-5">{item.title}</p>
                       <b>{item.price} руб. </b>
                     </div>
                     <img
-                      className="remove-btn"
+                      className={styles['remove-btn']}
                       width={32}
                       height={32}
                       src="/img/icons/btn-remove.svg"

@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+
 import AppContext from '../../context'
+
 import style from './Header.module.scss'
 
 function Header({ onClickCart }) {

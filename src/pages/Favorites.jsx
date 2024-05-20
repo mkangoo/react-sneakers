@@ -1,8 +1,10 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+
 import Card from '../components/Card'
-import AppContext from '../context'
 import Info from '../components/Info'
+
+import AppContext from '../context'
 
 function Favorites() {
   const { favorites, onAddToCart, onAddToFavorite } = useContext(AppContext)
