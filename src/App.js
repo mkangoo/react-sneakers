@@ -41,12 +41,24 @@ function App() {
 
   const onAddToCart = async obj => {
     try {
-      if (cartItems.find(item => Number(item.id) === Number(obj.id))) {
-        setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)))
-        await axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${obj.id}`)
+      const findItem = cartItems.find(item => Number(item.parentId) === Number(obj.id))
+      if (findItem) {
+        setCartItems(prev => prev.filter(item => Number(item.parentId) !== Number(obj.id)))
+        await axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${findItem.id}`)
       } else {
         setCartItems(prev => [...prev, obj])
-        await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
+        const { data } = await axios.post('https://6637d3bb288fedf693817325.mockapi.io/cart', obj)
+        setCartItems(prev =>
+          prev.map(item => {
+            if (parent.id === data.parentId) {
+              return {
+                ...item,
+                id: data.id,
+              }
+            }
+            return item
+          }),
+        )
       }
     } catch (error) {
       alert('Error adding to cart')
@@ -56,7 +68,7 @@ function App() {
 
   const onRemoveItem = id => {
     try {
-      setCartItems(prev => prev.filter(item => item.id !== id))
+      setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
       axios.delete(`https://6637d3bb288fedf693817325.mockapi.io/cart/${id}`)
     } catch (error) {
       alert('Error when deleting from basket')
