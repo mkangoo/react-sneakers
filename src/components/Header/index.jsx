@@ -1,12 +1,15 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import AppContext from '../../context'
+import AppContext from '../../Context/AppContext'
 
-import style from './Header.module.scss'
+import Toggle from '../ToggleTheme'
+
+import styles from './Header.module.scss'
 
 function Header({ onClickCart }) {
   const { cartItems } = useContext(AppContext)
+  // const { theme, toggleTheme } = useContext(ThemeContext)
 
   const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0)
   return (
@@ -31,11 +34,14 @@ function Header({ onClickCart }) {
             <span>Закладки</span>
           </Link>
         </li>
-        <li className="cu-p">
+        <li className="mr-30 cu-p">
           <Link to="/orders">
             <img src="/img/icons/user.svg" alt="User" />
             <span>Профиль</span>
           </Link>
+        </li>
+        <li className="cu-p">
+          <Toggle />
         </li>
       </ul>
     </header>
