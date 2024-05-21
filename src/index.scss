@@ -1,12 +1,30 @@
+* {
+  font-family: "Inter", sans-serif;
+}
+
 body {
   margin: 0;
-  background-color: #e6f6ff;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  font-family: "Inter", sans-serif;
+body.light {
+  background-color: #e6f6ff;
+}
+
+body.dark {
+  // background-color: #53768a;
+  background-color: #1e4e68;
+
+  header {
+    background: linear-gradient(to right, #525252, #242424);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: #ffffff;
+  }
 }
 
 .wrapper {
@@ -21,6 +39,7 @@ body {
     margin: 0;
   }
 }
+
 .cartEmpty {
   margin: 0 auto;
   width: 280px;
@@ -29,11 +48,6 @@ body {
     width: 245px;
     margin-top: 20px;
 
-    &:hover {
-      img {
-        transform: rotate(180deg) translateX(3px);
-      }
-    }
     img {
       position: relative;
       top: 1px;
@@ -77,6 +91,7 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border: none;
   background: #9dd458;
+  text-align: center;
   transition:
     transform 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;
@@ -87,48 +102,22 @@ body {
     font-weight: 500;
     line-height: 19px;
     text-align: center;
+    img {
+      position: absolute;
+      right: 90px;
+    }
   }
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     background: lighten($color: #9dd558, $amount: 1);
   }
   &:active {
-    transform: translateY(1px);
     box-shadow: none;
     background: darken($color: #9dd558, $amount: 1);
   }
   &:disabled {
     background-color: #bebebe !important;
     cursor: default;
-  }
-}
-
-.favorites {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 290px;
-  margin: 0 auto;
-  text-align: center;
-  img {
-    margin-bottom: 29px;
-    margin-top: 100px;
-  }
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19px;
-    opacity: 40%;
-    margin-bottom: 70px;
-  }
-  .green-button {
-    cursor: pointer;
-    width: 245px;
-    color: #f3f3f3;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
   }
 }
 
@@ -141,5 +130,26 @@ body {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1054px) {
+  .cartHomePages {
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 954px) {
+}
+
+@media (max-width: 814px) {
+  .cartHomePages {
+    justify-content: flex-start;
+  }
+  .mainContent {
+    display: inline-block;
+  }
+  .search-block {
+    margin-top: 20px;
   }
 }

@@ -26,6 +26,10 @@
 		cursor: pointer;
 	}
 
+	.plus {
+		cursor: pointer;
+	}
+
 	span {
 		font-size: 13px;
 		opacity: 0.5;
@@ -40,8 +44,10 @@
 		font-size: 13px;
 		font-weight: 400;
 	}
+}
 
-	.plus {
-		cursor: pointer;
+@media (max-width: 814px) and (min-width: 767px) {
+	.card {
+		width: 180px;
 	}
 }
