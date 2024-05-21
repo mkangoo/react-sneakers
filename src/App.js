@@ -8,7 +8,7 @@ import Favorites from './pages/Favorites'
 import Orders from './pages/Orders'
 import Home from './pages/Home'
 
-import AppContext from './context'
+import AppContext from './Context/AppContext'
 
 import './index.scss'
 
@@ -75,6 +75,7 @@ function App() {
       console.error(error)
     }
   }
+
   const onAddToFavorite = obj => {
     try {
       if (favorites.find(favoriteObj => favoriteObj.id === obj.id)) {
@@ -91,7 +92,7 @@ function App() {
   const onChangeSearchInput = event => {
     setSearchValue(event.target.value)
   }
-  //TODO: refactor function
+
   const isItemAdded = id => {
     return cartItems.some(obj => Number(obj.parentId) === Number(id))
   }
@@ -102,7 +103,18 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ items, cartItems, favorites, isItemAdded, onAddToCart, onAddToFavorite, isFavoriteAdded, setCartOpened, setCartItems }}
+      value={{
+        items,
+        cartItems,
+        favorites,
+        cartOpened,
+        isItemAdded,
+        onAddToCart,
+        onAddToFavorite,
+        isFavoriteAdded,
+        setCartOpened,
+        setCartItems,
+      }}
     >
       <div className="wrapper clear">
         <Header onClickCart={() => setCartOpened(true)} />
