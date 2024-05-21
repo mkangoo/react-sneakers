@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Card from '../components/Card'
 import Info from '../components/Info'
 
-import AppContext from '../context'
+import AppContext from '../Context/AppContext'
 
 function Favorites() {
   const { favorites, onAddToCart, onAddToFavorite } = useContext(AppContext)

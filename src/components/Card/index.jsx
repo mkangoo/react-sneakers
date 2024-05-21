@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import ContentLoader from 'react-content-loader'
-import AppContext from '../../context'
+import AppContext from '../../Context/AppContext'
 
 import styles from './Card.module.scss'
 

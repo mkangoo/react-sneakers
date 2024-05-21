@@ -29,7 +29,7 @@ function Home({ items, searchValue, setSearchValue, onChangeSearchInput, onAddTo
         </div>
       </div>
 
-      <div className=" d-flex flex-wrap ">{renderItems()}</div>
+      <div className="d-flex flex-wrap ">{renderItems()}</div>
     </div>
   )
 }
